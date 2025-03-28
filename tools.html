@@ -11,12 +11,18 @@
       background-color: #f9fafb;
       margin: 0;
       padding: 40px;
-      max-width: 800px;
+      max-width: 900px;
       margin: auto;
     }
     h1 {
       font-size: 2rem;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+    }
+    h2 {
+      font-size: 1.4rem;
+      margin: 30px 0 15px;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 4px;
     }
     .tool-card {
       background: #fff;
@@ -26,7 +32,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
       border-left: 5px solid #4f46e5;
     }
-    .tool-card h2 {
+    .tool-card h3 {
       margin: 0;
       font-size: 1.25rem;
     }
@@ -50,28 +56,36 @@
   </style>
 </head>
 <body>
+
   <h1>🛠️ Tools by Thomas Braziel</h1>
 
+  <h2>🏛️ Tools for Bankruptcy Pros</h2>
+
   <div class="tool-card">
-    <h2>Trustee Fee Calculator</h2>
-    <p>Calculate Chapter 7 trustee compensation under 11 U.S.C. § 326(a), with secured debt exclusion and cap logic.</p>
+    <h3>Trustee Fee Calculator</h3>
+    <p>Calculate Chapter 7 trustee compensation under 11 U.S.C. § 326(a), including logic for secured claims and caps.</p>
     <a class="tool-link" href="/trustee-fee-tool/" target="_blank">Open Tool</a>
   </div>
 
   <div class="tool-card">
-    <h2>BitClave Recovery Estimator</h2>
-    <p>Estimate potential recovery value from the BitClave settlement and SEC enforcement based on your token holdings.</p>
+    <h3>Lease Rejection Claim Calculator</h3>
+    <p>Estimate capped lease rejection damages under 11 U.S.C. § 502(b)(6), with jurisdictional logic and stub rent calculations.</p>
+    <a class="tool-link" href="/lease-rejection-tool/" target="_blank">Open Tool</a>
+  </div>
+
+  <h2>📉 Tools for Claim Recovery Analysis</h2>
+
+  <div class="tool-card">
+    <h3>BitClave Recovery Estimator</h3>
+    <p>Estimate your recovery based on BitClave SEC settlement pool and your CAT token holdings.</p>
     <a class="tool-link" href="/bitclave.html" target="_blank">Open Tool</a>
   </div>
 
-<div class="tool-card">
-  <h2>Lease Rejection Claim Calculator</h2>
-  <p>Estimate capped lease rejection claims under 11 U.S.C. § 502(b)(6), with auto-calculated stub rent and claim logic.</p>
-  <a class="tool-link" href="/lease-rejection-tool/" target="_blank">Open Tool</a>
-</div>
-
-  <!-- Add more tools below as you launch them -->
+  <div class="tool-card">
+    <h3>3AC Claim Recovery Calculator</h3>
+    <p>Estimate potential recovery on your 3AC claim using scenario-based modeling (low, base, high) from Thomas's financial assumptions.</p>
+    <a class="tool-link" href="/3ac-claim-tool/" target="_blank">Open Tool</a>
+  </div>
 
 </body>
 </html>
-
