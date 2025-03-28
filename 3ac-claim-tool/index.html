@@ -1,1 +1,46 @@
+<!-- 3AC Claim Recovery Calculator (Embedded) -->
+<section class="mt-12 p-6 bg-white border border-gray-200 rounded shadow">
+  <h2 class="text-xl font-bold mb-2">3AC Claim Recovery Calculator</h2>
+  <p class="mb-4 text-sm text-gray-600">Estimate your potential recovery from the Three Arrows Capital estate using Thomas Braziel’s financial model.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <div>
+      <label class="block text-sm font-medium">Your Claim Amount (USD)</label>
+      <input type="number" id="threeacClaim" class="w-full p-2 border border-gray-300 rounded" value="1000000">
+    </div>
+    <div>
+      <label class="block text-sm font-medium">Recovery Scenario</label>
+      <select id="threeacScenario" class="w-full p-2 border border-gray-300 rounded">
+        <option value="0.1315">Low (13.15%)</option>
+        <option value="0.2290" selected>Base (22.90%)</option>
+        <option value="0.3164">High (31.64%)</option>
+      </select>
+    </div>
+  </div>
+
+  <button onclick="calculate3AC()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">Calculate</button>
+
+  <div id="threeacResult" class="mt-4 p-4 bg-gray-50 border border-gray-200 rounded text-base"></div>
+
+  <div class="mt-6 bg-blue-50 p-4 border-l-4 border-blue-400 text-sm">
+    <strong>Note:</strong> This is based on internal modeling. Results vary with asset recoveries and claim litigation outcomes.
+  </div>
+</section>
+
+<script>
+  function calculate3AC() {
+    const claim = parseFloat(document.getElementById('threeacClaim').value);
+    const rate = parseFloat(document.getElementById('threeacScenario').value);
+    if (isNaN(claim) || claim <= 0) {
+      document.getElementById('threeacResult').innerHTML = "Please enter a valid claim amount.";
+      return;
+    }
+    const recovery = claim * rate;
+    const percent = (rate * 100).toFixed(2);
+    document.getElementById('threeacResult').innerHTML = `
+      Estimated Recovery: <strong>$${recovery.toLocaleString(undefined, {maximumFractionDigits: 2})}</strong><br/>
+      Recovery Rate: <strong>${percent}%</strong>
+    `;
+  }
+</script>
 
