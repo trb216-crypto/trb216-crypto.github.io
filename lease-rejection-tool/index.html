@@ -1,1 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lease Rejection Claim Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9f9f9;
+      padding: 40px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 15px;
+      font-size: 1rem;
+    }
+    label {
+      font-weight: 600;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .output {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 16px;
+      font-size: 1rem;
+      border: none;
+      background-color: #4f46e5;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .section-title {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .legal {
+      font-size: 0.9rem;
+      background: #eef;
+      padding: 15px;
+      border-left: 4px solid #88c;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lease Rejection Claim Calculator</h1>
+
+  <div class="grid">
+    <div>
+      <label>Monthly Rent ($)</label>
+      <input type="number" id="monthlyRent" value="5000" />
+    </div>
+    <div>
+      <label>Lease Start Date</label>
+      <input type="date" id="startDate" value="2020-01-01" />
+    </div>
+    <div>
+      <label>Lease End Date</label>
+      <input type="date" id="endDate" value="2027-12-31" />
+    </div>
+    <div>
+      <label>Rejection Date</label>
+      <input type="date" id="rejectionDate" value="2025-06-17" />
+    </div>
+    <div>
+      <label>Pre-Rejection Arrears ($)</label>
+      <input type="number" id="arrears" value="10000" />
+    </div>
+    <div>
+      <label>Stub Rent (if unpaid) ($)</label>
+      <input type="number" id="stubRent" value="0" />
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button onclick="downloadExcel()">Download Excel</button>
+    <button onclick="generatePDF()">Generate PDF</button>
+  </div>
+
+  <div class="output" id="output">
+    <!-- results populate here -->
+  </div>
+
+  <div class="legal">
+    <strong>Legal References</strong><br/>
+    - Statute: <em>11 U.S.C. § 502(b)(6)</em><br/>
+    - <strong>Case Law:</strong><br/>
+    <ul>
+      <li><em>In re Handy Andy Home Improvement Ctrs., Inc.</em>, 222 B.R. 571 (Bankr. N.D. Ill. 1998)</li>
+      <li><em>In re Financial News Network, Inc.</em>, 149 B.R. 348 (Bankr. S.D.N.Y. 1993)</li>
+      <li><em>In re Iron-Oak Supply Corp.</em>, 169 B.R. 414 (Bankr. E.D. Cal. 1994)</li>
+    </ul>
+  </div>
+
+  <script>
+    function calculateClaim() {
+      const rent = parseFloat(document.getElementById('monthlyRent').value);
+      const arrears = parseFloat(document.getElementById('arrears').value);
+      const stub = parseFloat(document.getElementById('stubRent').value);
+
+      const start = new Date(document.getElementById('startDate').value);
+      const end = new Date(document.getElementById('endDate').value);
+      const rejection = new Date(document.getElementById('rejectionDate').value);
+
+      const msPerMonth = 30.44 * 24 * 60 * 60 * 1000;
+      const remainingMonths = Math.floor((end - rejection) / msPerMonth);
+      const capMonths = Math.min(36, Math.max(12, Math.floor(remainingMonths * 0.15)));
+
+      const cappedClaim = rent * capMonths;
+      const total = cappedClaim + arrears + stub;
+
+      document.getElementById('output').innerHTML = `
+        <div class="section-title">§ 502(b)(6) Cap</div>
+        (${capMonths} × $${rent.toLocaleString()}) = <strong>$${cappedClaim.toLocaleString()}</strong>
+        <div class="section-title">Pre-Rejection Arrears</div>
+        $${arrears.toLocaleString()}
+        <div class="section-title">Stub Rent (Admin)</div>
+        $${stub.toLocaleString()}
+        <hr>
+        <div class="section-title">Total Lease Rejection Claim</div>
+        <strong>$${total.toLocaleString()}</strong>
+      `;
+    }
+
+    function downloadExcel() {
+      calculateClaim();
+
+      const ws_data = [
+        ["Field", "Value"],
+        ["Monthly Rent", document.getElementById('monthlyRent').value],
+        ["Lease Start", document.getElementById('startDate').value],
+        ["Lease End", document.getElementById('endDate').value],
+        ["Rejection Date", document.getElementById('rejectionDate').value],
+        ["Pre-Rejection Arrears", document.getElementById('arrears').value],
+        ["Stub Rent", document.getElementById('stubRent').value],
+      ];
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet(ws_data);
+      XLSX.utils.book_append_sheet(wb, ws, "Lease Claim");
+      XLSX.writeFile(wb, "lease_rejection_claim.xlsx");
+    }
+
+    function generatePDF() {
+      calculateClaim();
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const content = document.getElementById('output').innerText;
+      doc.text("Lease Rejection Claim Summary", 10, 10);
+      doc.text(content, 10, 20);
+      doc.save("lease_claim_summary.pdf");
+    }
+
+    window.onload = calculateClaim;
+  </script>
+</body>
+</html>
 
