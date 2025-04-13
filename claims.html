@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crypto Claims Tracker</title>
+  <meta charset="UTF-8" />
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #f7f7f7; }
+    table { width: 100%; border-collapse: collapse; background: white; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #333; color: white; }
+    .badge { padding: 4px 8px; border-radius: 5px; color: white; font-weight: bold; }
+    .high { background: #1d4ed8; }
+    .medium { background: #d97706; }
+    .low { background: #9ca3af; }
+  </style>
+</head>
+<body>
+  <h1>Crypto Claims Tracker</h1>
+  <table id="claims-table">
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Estimated Liabilities</th>
+        <th>Status</th>
+        <th>Opportunity</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    fetch('claims.json')
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector('#claims-table tbody');
+        data.forEach(claim => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${claim.project}</td>
+            <td>${claim.liabilities}</td>
+            <td>${claim.status}</td>
+            <td><span class="badge ${claim.opportunity.toLowerCase()}">${claim.opportunity}</span></td>
+          `;
+          tbody.appendChild(row);
+        });
+      });
+  </script>
+</body>
+</html>
