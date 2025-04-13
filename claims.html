@@ -36,4 +36,53 @@
         <th>Action</th>
       </tr>
     </thead>
+<script>
+  const ADMIN_MODE = false; // Set to true to allow editing
+
+  const filterEl = document.getElementById("filter");
+  const tbody = document.querySelector("#claims-table tbody");
+
+  function renderTable(data) {
+    tbody.innerHTML = "";
+    const selected = filterEl.value;
+    data
+      .filter(row => selected === "All" || row.Opportunity === selected)
+      .forEach(row => {
+        const tr = document.createElement("tr");
+
+        const recoveryCell = document.createElement("td");
+        recoveryCell.contentEditable = ADMIN_MODE;
+        recoveryCell.textContent = row.Recovery || "";
+
+        const timelineCell = document.createElement("td");
+        timelineCell.contentEditable = ADMIN_MODE;
+        timelineCell.textContent = row.Timeline || "";
+
+        tr.innerHTML = `
+          <td>${row.Project}</td>
+          <td>${row["Estimated Liabilities"]}</td>
+          <td>${row.Status}</td>
+          <td>${row.Opportunity}</td>
+        `;
+        tr.appendChild(recoveryCell);
+        tr.appendChild(timelineCell);
+        tr.innerHTML += `<td>${ADMIN_MODE ? "<button>Save</button>" : ""}</td>`;
+        tbody.appendChild(tr);
+      });
+  }
+
+  fetch("claims.json")
+    .then(res => res.json())
+    .then(data => {
+      window.claimsData = data;
+      renderTable(data);
+    })
+    .catch(err => {
+      tbody.innerHTML = `<tr><td colspan="7">Error loading claims.json: ${err}</td></tr>`;
+    });
+
+  filterEl.addEventListener("change", () => renderTable(window.claimsData));
+</script>
+</body>
+</html>
     <tbody
