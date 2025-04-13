@@ -9,10 +9,11 @@
     th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
     th { background: #333; color: white; }
     .badge { padding: 4px 8px; border-radius: 5px; color: white; font-weight: bold; }
-    .high { background: #1d4ed8; }
-    .medium { background: #d97706; }
-    .low { background: #9ca3af; }
-    select { padding: 8px; margin-top: 1rem; }
+    .High { background: #1d4ed8; }
+    .Medium { background: #d97706; }
+    .Low { background: #9ca3af; }
+    select, input { padding: 6px; margin: 0.3rem 0; }
+    button { padding: 4px 10px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -33,6 +34,9 @@
         <th>Estimated Liabilities</th>
         <th>Status</th>
         <th>Opportunity</th>
+        <th>Recovery %</th>
+        <th>Timeline</th>
+        <th></th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -41,28 +45,50 @@
   <script>
     let allClaims = [];
 
-    function renderTable(filteredClaims) {
+    function getSavedData(project, field) {
+      return localStorage.getItem(`${project}_${field}`) || "";
+    }
+
+    function saveData(project, field, value) {
+      localStorage.setItem(`${project}_${field}`, value);
+    }
+
+    function renderTable(claims) {
       const tbody = document.querySelector('#claims-table tbody');
       tbody.innerHTML = "";
-      filteredClaims.forEach(claim => {
+
+      claims.forEach((claim, i) => {
+        const recoveryId = `recovery_${i}`;
+        const timelineId = `timeline_${i}`;
+        const savedRecovery = getSavedData(claim.Project, "recovery");
+        const savedTimeline = getSavedData(claim.Project, "timeline");
+
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${claim.project}</td>
-          <td>${claim.liabilities}</td>
-          <td>${claim.status}</td>
-          <td><span class="badge ${claim.opportunity.toLowerCase()}">${claim.opportunity}</span></td>
+          <td>${claim.Project}</td>
+          <td>${claim["Estimated Liabilities"]}</td>
+          <td>${claim.Status}</td>
+          <td><span class="badge ${claim.Opportunity}">${claim.Opportunity}</span></td>
+          <td><input type="text" id="${recoveryId}" value="${savedRecovery}" placeholder="e.g. 70%" /></td>
+          <td><input type="text" id="${timelineId}" value="${savedTimeline}" placeholder="e.g. Q4 2025" /></td>
+          <td><button onclick="saveRow('${claim.Project}', '${recoveryId}', '${timelineId}')">Save</button></td>
         `;
         tbody.appendChild(row);
       });
     }
 
-    document.getElementById('filter').addEventListener('change', (e) => {
-      const value = e.target.value;
-      if (value === "All") {
-        renderTable(allClaims);
-      } else {
-        renderTable(allClaims.filter(c => c.opportunity === value));
-      }
+    function saveRow(project, recoveryId, timelineId) {
+      const recovery = document.getElementById(recoveryId).value;
+      const timeline = document.getElementById(timelineId).value;
+      saveData(project, "recovery", recovery);
+      saveData(project, "timeline", timeline);
+      alert("Saved for " + project);
+    }
+
+    document.getElementById('filter').addEventListener('change', e => {
+      const val = e.target.value;
+      if (val === "All") renderTable(allClaims);
+      else renderTable(allClaims.filter(c => c.Opportunity === val));
     });
 
     fetch('claims.json')
