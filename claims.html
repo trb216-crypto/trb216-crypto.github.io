@@ -38,10 +38,9 @@
     let currentSortKey = "";
     let currentSortAsc = true;
 
-    // Prompt admin once per session
     if (localStorage.getItem("isAdmin") === "true" || confirm("Admin access? Click OK and enter passphrase.")) {
       const code = prompt("Enter admin passphrase:");
-      if (code === "117") { // you can change this passphrase
+      if (code === "117") {
         isAdmin = true;
         localStorage.setItem("isAdmin", "true");
       }
@@ -89,33 +88,3 @@
       const isNumeric = key === "Estimated Liabilities" || key === "recovery";
       allClaims.sort((a, b) => {
         let valA = isNumeric ? parseFloat((a[key] || "").replace(/[^\d.]/g, "")) : (a[key] || "").toLowerCase();
-        let valB = isNumeric ? parseFloat((b[key] || "").replace(/[^\d.]/g, "")) : (b[key] || "").toLowerCase();
-        return currentSortAsc ? valA - valB : valB - valA;
-      });
-
-      renderTable(allClaims);
-    }
-
-    document.querySelectorAll("th[data-key]").forEach(th => {
-      th.addEventListener("click", () => sortBy(th.dataset.key));
-    });
-
-    document.getElementById("filter").addEventListener("input", e => {
-      const val = e.target.value.toLowerCase();
-      const filtered = allClaims.filter(c => c.Project.toLowerCase().includes(val));
-      renderTable(filtered);
-    });
-
-    fetch("claims.json")
-      .then(res => res.json())
-      .then(data => {
-        allClaims = data.map(d => ({
-          ...d,
-          recovery: getSaved(d.Project, "recovery"),
-          timeline: getSaved(d.Project, "timeline")
-        }));
-        renderTable(allClaims);
-      });
-  </script>
-</body>
-</html>
