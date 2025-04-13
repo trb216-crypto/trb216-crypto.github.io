@@ -1,152 +1,114 @@
-[
-  {
-    "Project": "Bitconnect",
-    "Estimated Liabilities": "$57M+ recovered",
-    "Status": "DOJ/SEC recovery; partial Fair Fund distributed",
-    "Opportunity": "Medium"
-  },
-  {
-    "Project": "TrueTrading / Archblock",
-    "Estimated Liabilities": "$35M",
-    "Status": "TrueFi pool default; recovery ongoing",
-    "Opportunity": "Medium"
-  },
-  {
-    "Project": "FTX",
-    "Estimated Liabilities": "$8B+",
-    "Status": "Bankruptcy",
-    "Opportunity": "High"
-  },
-  {
-    "Project": "Celsius Network",
-    "Estimated Liabilities": "$5B+",
-    "Status": "Bankruptcy, plan confirmed",
-    "Opportunity": "High"
-  },
-  {
-    "Project": "Three Arrows Capital (3AC)",
-    "Estimated Liabilities": "$3B+",
-    "Status": "Liquidation (BVI)",
-    "Opportunity": "High"
-  },
-  {
-    "Project": "Genesis Global",
-    "Estimated Liabilities": "$3.5B+",
-    "Status": "Chapter 11",
-    "Opportunity": "High"
-  },
-  {
-    "Project": "Voyager Digital",
-    "Estimated Liabilities": "$1.3B",
-    "Status": "Chapter 11",
-    "Opportunity": "High"
-  },
-  {
-    "Project": "BlockFi",
-    "Estimated Liabilities": "$1B\u2013$2B",
-    "Status": "Chapter 11",
-    "Opportunity": "High"
-  },
-  {
-    "Project": "Mt. Gox",
-    "Estimated Liabilities": "$3.5B",
-    "Status": "Rehabilitation",
-    "Opportunity": "High"
-  },
-  {
-    "Project": "Cred Inc.",
-    "Estimated Liabilities": "$500M",
-    "Status": "Chapter 11",
-    "Opportunity": "High"
-  },
-  {
-    "Project": "CoinFLEX",
-    "Estimated Liabilities": "$100M+",
-    "Status": "Restructuring",
-    "Opportunity": "High"
-  },
-  {
-    "Project": "Zipmex",
-    "Estimated Liabilities": "$50M\u2013100M",
-    "Status": "Restructuring (SG/TH)",
-    "Opportunity": "High"
-  },
-  {
-    "Project": "QuadrigaCX",
-    "Estimated Liabilities": "$200M CAD",
-    "Status": "Bankruptcy",
-    "Opportunity": "Medium"
-  },
-  {
-    "Project": "BitGrail",
-    "Estimated Liabilities": "$170M",
-    "Status": "Italian liquidation",
-    "Opportunity": "Medium"
-  },
-  {
-    "Project": "Terra / Anchor",
-    "Estimated Liabilities": "Unknown",
-    "Status": "No bankruptcy; class action",
-    "Opportunity": "Medium"
-  },
-  {
-    "Project": "Hodlnaut",
-    "Estimated Liabilities": "Unknown",
-    "Status": "Singapore liquidation",
-    "Opportunity": "Medium"
-  },
-  {
-    "Project": "Amber Group",
-    "Estimated Liabilities": "Unknown",
-    "Status": "Collapse under review",
-    "Opportunity": "Medium"
-  },
-  {
-    "Project": "BTC-e / WEX",
-    "Estimated Liabilities": "$500M+ (est.)",
-    "Status": "Seized, unclear path",
-    "Opportunity": "Low"
-  },
-  {
-    "Project": "Cryptopia",
-    "Estimated Liabilities": "$100M+",
-    "Status": "New Zealand liquidation",
-    "Opportunity": "Medium"
-  },
-  {
-    "Project": "Sparkster",
-    "Estimated Liabilities": "$35M",
-    "Status": "SEC settled; funds being returned via Fair Fund",
-    "Opportunity": "Medium"
-  },
-  {
-    "Project": "Nexo Capital",
-    "Estimated Liabilities": "$45M",
-    "Status": "SEC + state AG settlements; likely Fair Fund",
-    "Opportunity": "Medium"
-  },
-  {
-    "Project": "ICOBox",
-    "Estimated Liabilities": "$16M",
-    "Status": "SEC judgment; recovery uncertain",
-    "Opportunity": "Low"
-  },
-  {
-    "Project": "Paragon & AirFox",
-    "Estimated Liabilities": "$270K combined",
-    "Status": "Fair Funds completed",
-    "Opportunity": "Low"
-  },
-  {
-    "Project": "Ripple (XRP)",
-    "Estimated Liabilities": "N/A",
-    "Status": "SEC litigation ongoing; potential Fair Fund",
-    "Opportunity": "Medium"
-  },
-  {
-    "Project": "Telegram (TON)",
-    "Estimated Liabilities": "$1.2B return ordered",
-    "Status": "SEC settlement; funds returned",
-    "Opportunity": "Low"
-  }
-]
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Crypto Claims Tracker</title>
+  <style>
+    body { font-family: sans-serif; background: #f5f5f5; padding: 2rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; }
+    table { width: 100%; border-collapse: collapse; background: white; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #333; color: white; cursor: pointer; }
+    input, select { padding: 4px; margin-bottom: 10px; }
+    button { padding: 4px 8px; }
+  </style>
+</head>
+<body>
+  <h1>Crypto Claims Tracker</h1>
+
+  <label for="filter">Filter by project name:</label>
+  <input id="search" placeholder="Filter by project name...">
+
+  <table id="claims-table">
+    <thead>
+      <tr>
+        <th data-sort="Project">Project</th>
+        <th data-sort="Estimated Liabilities">Estimated Liabilities</th>
+        <th data-sort="Status">Status</th>
+        <th data-sort="Recovery">Recovery %</th>
+        <th data-sort="Timeline">Timeline</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    let claims = [];
+    let isAdmin = false;
+    let currentSortKey = null;
+    let sortAsc = true;
+
+    if (localStorage.getItem("isAdmin") === "true" || confirm("Admin access?")) {
+      const pass = prompt("Enter admin passphrase:");
+      if (pass === "117") {
+        isAdmin = true;
+        localStorage.setItem("isAdmin", "true");
+      }
+    }
+
+    function renderTable(data) {
+      const tbody = document.querySelector("#claims-table tbody");
+      tbody.innerHTML = "";
+
+      data.forEach((claim, i) => {
+        const project = claim["Project"];
+        const recoveryKey = `${project}_recovery`;
+        const timelineKey = `${project}_timeline`;
+        const savedRecovery = localStorage.getItem(recoveryKey) || "";
+        const savedTimeline = localStorage.getItem(timelineKey) || "";
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${project}</td>
+          <td>${claim["Estimated Liabilities"]}</td>
+          <td>${claim["Status"]}</td>
+          <td>${isAdmin ? `<input id="recovery_${i}" value="${savedRecovery}">` : savedRecovery}</td>
+          <td>${isAdmin ? `<input id="timeline_${i}" value="${savedTimeline}">` : savedTimeline}</td>
+          <td>${isAdmin ? `<button onclick="save('${project}', ${i})">Save</button>` : ""}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function save(project, i) {
+      const recovery = document.getElementById(`recovery_${i}`).value;
+      const timeline = document.getElementById(`timeline_${i}`).value;
+      localStorage.setItem(`${project}_recovery`, recovery);
+      localStorage.setItem(`${project}_timeline`, timeline);
+      alert("Saved!");
+    }
+
+    function sortData(key) {
+      sortAsc = key !== currentSortKey ? true : !sortAsc;
+      currentSortKey = key;
+      claims.sort((a, b) => {
+        const valA = (a[key] || "").toLowerCase();
+        const valB = (b[key] || "").toLowerCase();
+        return sortAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+      });
+      renderTable(claims);
+    }
+
+    document.querySelectorAll("th[data-sort]").forEach(th => {
+      th.addEventListener("click", () => sortData(th.getAttribute("data-sort")));
+    });
+
+    document.getElementById("search").addEventListener("input", (e) => {
+      const value = e.target.value.toLowerCase();
+      const filtered = claims.filter(c => c.Project.toLowerCase().includes(value));
+      renderTable(filtered);
+    });
+
+    fetch("claims.json")
+      .then(res => res.json())
+      .then(data => {
+        claims = data;
+        renderTable(claims);
+      })
+      .catch(err => {
+        document.querySelector("#claims-table").insertAdjacentHTML("afterend", `<p>Error loading claims.json: ${err.message}</p>`);
+      });
+  </script>
+</body>
+</html>
