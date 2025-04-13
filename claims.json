@@ -1,8 +1,266 @@
 [
   {
-    "project": "BitClave",
-    "liabilities": "$25M",
-    "status": "SEC enforcement; Fair Fund ongoing",
-    "opportunity": "Medium"
+    "Project": "BitClave",
+    "Estimated Liabilities": "$25M",
+    "Status": "SEC enforcement; Fair Fund ongoing",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "Ripple (XRP)",
+    "Estimated Liabilities": "N/A",
+    "Status": "SEC litigation ongoing; potential Fair Fund",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "Block.one (EOS)",
+    "Estimated Liabilities": "$24M settlement",
+    "Status": "SEC settlement in 2019; no Fair Fund announced",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "Telegram (TON)",
+    "Estimated Liabilities": "$1.2B return ordered",
+    "Status": "SEC settlement; funds returned",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "Sparkster",
+    "Estimated Liabilities": "$35M",
+    "Status": "SEC settled; funds being returned via Fair Fund",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "Trade Coin Club",
+    "Estimated Liabilities": "$295M est.",
+    "Status": "SEC enforcement; early stage",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "Nexo Capital",
+    "Estimated Liabilities": "$45M",
+    "Status": "SEC + state AG settlements; likely Fair Fund",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "Recoin & DRC World",
+    "Estimated Liabilities": "N/A",
+    "Status": "SEC fraud enforcement; possible Fair Fund",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "ICOBox",
+    "Estimated Liabilities": "$16M",
+    "Status": "SEC judgment; recovery uncertain",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "LBRY",
+    "Estimated Liabilities": "N/A",
+    "Status": "SEC case lost on appeal; unclear recovery",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "Library Credits",
+    "Estimated Liabilities": "N/A",
+    "Status": "Same as LBRY",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "Paragon & AirFox",
+    "Estimated Liabilities": "$270K combined",
+    "Status": "Fair Funds completed",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "Centra Tech",
+    "Estimated Liabilities": "$25M+",
+    "Status": "SEC redemptions",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "PlexCoin",
+    "Estimated Liabilities": "$10M",
+    "Status": "SEC seizure; Fair Fund in process",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "BitConnect",
+    "Estimated Liabilities": "$57M+ recovered",
+    "Status": "DOJ/SEC recovery; partial Fair Fund distributed",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "FTX",
+    "Estimated Liabilities": "$8B+",
+    "Status": "Bankruptcy",
+    "Opportunity": "High"
+  },
+  {
+    "Project": "Celsius Network",
+    "Estimated Liabilities": "$5B+",
+    "Status": "Bankruptcy, plan confirmed",
+    "Opportunity": "High"
+  },
+  {
+    "Project": "Three Arrows Capital (3AC)",
+    "Estimated Liabilities": "$3B+",
+    "Status": "Liquidation (BVI)",
+    "Opportunity": "High"
+  },
+  {
+    "Project": "Genesis Global",
+    "Estimated Liabilities": "$3.5B+",
+    "Status": "Chapter 11",
+    "Opportunity": "High"
+  },
+  {
+    "Project": "Voyager Digital",
+    "Estimated Liabilities": "$1.3B",
+    "Status": "Chapter 11",
+    "Opportunity": "High"
+  },
+  {
+    "Project": "BlockFi",
+    "Estimated Liabilities": "$1B\u2013$2B",
+    "Status": "Chapter 11",
+    "Opportunity": "High"
+  },
+  {
+    "Project": "Mt. Gox",
+    "Estimated Liabilities": "$3.5B",
+    "Status": "Rehabilitation",
+    "Opportunity": "High"
+  },
+  {
+    "Project": "Cred Inc.",
+    "Estimated Liabilities": "$500M",
+    "Status": "Chapter 11",
+    "Opportunity": "High"
+  },
+  {
+    "Project": "CoinFLEX",
+    "Estimated Liabilities": "$100M+",
+    "Status": "Restructuring",
+    "Opportunity": "High"
+  },
+  {
+    "Project": "Zipmex",
+    "Estimated Liabilities": "$50M\u2013100M",
+    "Status": "Restructuring (SG/TH)",
+    "Opportunity": "High"
+  },
+  {
+    "Project": "QuadrigaCX",
+    "Estimated Liabilities": "$200M CAD",
+    "Status": "Bankruptcy",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "BitGrail",
+    "Estimated Liabilities": "$170M",
+    "Status": "Italian liquidation",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "Terra / Anchor",
+    "Estimated Liabilities": "Unknown",
+    "Status": "No bankruptcy; class action",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "Civic",
+    "Estimated Liabilities": "Unknown",
+    "Status": "Token collapse",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "SafeMoon",
+    "Estimated Liabilities": "Unknown",
+    "Status": "SEC enforcement",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "Hodlnaut",
+    "Estimated Liabilities": "Unknown",
+    "Status": "Singapore liquidation",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "Babel Finance",
+    "Estimated Liabilities": "Unknown",
+    "Status": "Insolvent; restructuring",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "Amber Group",
+    "Estimated Liabilities": "Unknown",
+    "Status": "Collapse under review",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "Cryptopia",
+    "Estimated Liabilities": "$100M+",
+    "Status": "New Zealand liquidation",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "BTC-e / WEX",
+    "Estimated Liabilities": "$500M+ (est.)",
+    "Status": "Seized, unclear path",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "Maple Finance",
+    "Estimated Liabilities": "Unknown",
+    "Status": "Credit defaults",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "Mirror Protocol",
+    "Estimated Liabilities": "Unknown",
+    "Status": "Class actions (U.S.)",
+    "Opportunity": "Medium"
+  },
+  {
+    "Project": "OneCoin",
+    "Estimated Liabilities": "$4B+",
+    "Status": "Massive global scam",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "Confido",
+    "Estimated Liabilities": "N/A",
+    "Status": "Exit scam",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "Benebit",
+    "Estimated Liabilities": "N/A",
+    "Status": "Exit scam",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "LoopX",
+    "Estimated Liabilities": "N/A",
+    "Status": "Exit scam",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "Bitcard",
+    "Estimated Liabilities": "N/A",
+    "Status": "Exit scam",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "Prodeum",
+    "Estimated Liabilities": "N/A",
+    "Status": "Exit scam",
+    "Opportunity": "Low"
+  },
+  {
+    "Project": "MyBit",
+    "Estimated Liabilities": "N/A",
+    "Status": "Token flop",
+    "Opportunity": "Low"
   }
 ]
