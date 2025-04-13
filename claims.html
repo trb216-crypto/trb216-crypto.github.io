@@ -6,37 +6,27 @@
   <style>
     body { font-family: sans-serif; padding: 2rem; background: #f7f7f7; }
     table { width: 100%; border-collapse: collapse; background: white; margin-top: 1rem; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    th { background: #333; color: white; }
-    .badge { padding: 4px 8px; border-radius: 5px; color: white; font-weight: bold; }
-    .High { background: #1d4ed8; }
-    .Medium { background: #d97706; }
-    .Low { background: #9ca3af; }
-    select, input { padding: 6px; margin: 0.3rem 0; }
-    button { padding: 4px 10px; cursor: pointer; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; cursor: pointer; }
+    th { background: #333; color: white; user-select: none; }
+    input, button { padding: 4px 8px; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
   <h1>Crypto Claims Tracker</h1>
 
-  <label for="filter">Filter by Opportunity:</label>
-  <select id="filter">
-    <option value="All">All</option>
-    <option value="High">High</option>
-    <option value="Medium">Medium</option>
-    <option value="Low">Low</option>
-  </select>
+  <label for="filter">Filter by Name:</label>
+  <input type="text" id="filter" placeholder="Type to search..." />
 
   <table id="claims-table">
     <thead>
       <tr>
-        <th>Project</th>
-        <th>Estimated Liabilities</th>
-        <th>Status</th>
-        <th>Opportunity</th>
-        <th>Recovery %</th>
-        <th>Timeline</th>
-        <th></th>
+        <th data-key="Project">Project</th>
+        <th data-key="Estimated Liabilities">Estimated Liabilities</th>
+        <th data-key="Status">Status</th>
+        <th data-key="recovery">Recovery %</th>
+        <th data-key="timeline">Timeline</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -44,58 +34,87 @@
 
   <script>
     let allClaims = [];
+    let isAdmin = false;
+    let currentSortKey = "";
+    let currentSortAsc = true;
 
-    function getSavedData(project, field) {
-      return localStorage.getItem(`${project}_${field}`) || "";
+    // Prompt admin once per session
+    if (localStorage.getItem("isAdmin") === "true" || confirm("Admin access? Click OK and enter passphrase.")) {
+      const code = prompt("Enter admin passphrase:");
+      if (code === "117") { // you can change this passphrase
+        isAdmin = true;
+        localStorage.setItem("isAdmin", "true");
+      }
     }
 
-    function saveData(project, field, value) {
-      localStorage.setItem(`${project}_${field}`, value);
-    }
-
-    function renderTable(claims) {
-      const tbody = document.querySelector('#claims-table tbody');
-      tbody.innerHTML = "";
-
-      claims.forEach((claim, i) => {
-        const recoveryId = `recovery_${i}`;
-        const timelineId = `timeline_${i}`;
-        const savedRecovery = getSavedData(claim.Project, "recovery");
-        const savedTimeline = getSavedData(claim.Project, "timeline");
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${claim.Project}</td>
-          <td>${claim["Estimated Liabilities"]}</td>
-          <td>${claim.Status}</td>
-          <td><span class="badge ${claim.Opportunity}">${claim.Opportunity}</span></td>
-          <td><input type="text" id="${recoveryId}" value="${savedRecovery}" placeholder="e.g. 70%" /></td>
-          <td><input type="text" id="${timelineId}" value="${savedTimeline}" placeholder="e.g. Q4 2025" /></td>
-          <td><button onclick="saveRow('${claim.Project}', '${recoveryId}', '${timelineId}')">Save</button></td>
-        `;
-        tbody.appendChild(row);
-      });
+    function getSaved(project, key) {
+      return localStorage.getItem(`${project}_${key}`) || "";
     }
 
     function saveRow(project, recoveryId, timelineId) {
       const recovery = document.getElementById(recoveryId).value;
       const timeline = document.getElementById(timelineId).value;
-      saveData(project, "recovery", recovery);
-      saveData(project, "timeline", timeline);
+      localStorage.setItem(`${project}_recovery`, recovery);
+      localStorage.setItem(`${project}_timeline`, timeline);
       alert("Saved for " + project);
     }
 
-    document.getElementById('filter').addEventListener('change', e => {
-      const val = e.target.value;
-      if (val === "All") renderTable(allClaims);
-      else renderTable(allClaims.filter(c => c.Opportunity === val));
+    function renderTable(claims) {
+      const tbody = document.querySelector("#claims-table tbody");
+      tbody.innerHTML = "";
+
+      claims.forEach((claim, i) => {
+        const recoveryId = `recovery_${i}`;
+        const timelineId = `timeline_${i}`;
+        const savedRecovery = getSaved(claim.Project, "recovery");
+        const savedTimeline = getSaved(claim.Project, "timeline");
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${claim.Project}</td>
+          <td>${claim["Estimated Liabilities"]}</td>
+          <td>${claim.Status}</td>
+          <td>${isAdmin ? `<input id="${recoveryId}" value="${savedRecovery}" />` : savedRecovery}</td>
+          <td>${isAdmin ? `<input id="${timelineId}" value="${savedTimeline}" />` : savedTimeline}</td>
+          <td>${isAdmin ? `<button onclick="saveRow('${claim.Project}', '${recoveryId}', '${timelineId}')">Save</button>` : ""}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function sortBy(key) {
+      currentSortAsc = (currentSortKey === key) ? !currentSortAsc : true;
+      currentSortKey = key;
+
+      const isNumeric = key === "Estimated Liabilities" || key === "recovery";
+      allClaims.sort((a, b) => {
+        let valA = isNumeric ? parseFloat((a[key] || "").replace(/[^\d.]/g, "")) : (a[key] || "").toLowerCase();
+        let valB = isNumeric ? parseFloat((b[key] || "").replace(/[^\d.]/g, "")) : (b[key] || "").toLowerCase();
+        return currentSortAsc ? valA - valB : valB - valA;
+      });
+
+      renderTable(allClaims);
+    }
+
+    document.querySelectorAll("th[data-key]").forEach(th => {
+      th.addEventListener("click", () => sortBy(th.dataset.key));
     });
 
-    fetch('claims.json')
+    document.getElementById("filter").addEventListener("input", e => {
+      const val = e.target.value.toLowerCase();
+      const filtered = allClaims.filter(c => c.Project.toLowerCase().includes(val));
+      renderTable(filtered);
+    });
+
+    fetch("claims.json")
       .then(res => res.json())
       .then(data => {
-        allClaims = data;
-        renderTable(data);
+        allClaims = data.map(d => ({
+          ...d,
+          recovery: getSaved(d.Project, "recovery"),
+          timeline: getSaved(d.Project, "timeline")
+        }));
+        renderTable(allClaims);
       });
   </script>
 </body>
