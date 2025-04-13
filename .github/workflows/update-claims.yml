@@ -1,0 +1,32 @@
+name: Fetch SEC Fair Fund Updates
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Runs every 6 hours
+  workflow_dispatch:
+
+jobs:
+  update-fair-fund-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Run Fair Fund Scraper
+        run: python fetch_fair_funds.py
+
+      - name: Commit and push updated claims.json
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add claims.json
+          git commit -m "Auto-update claims.json from SEC"
+          git push
