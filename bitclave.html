@@ -1,61 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BitClave Advisory | Thomas Braziel</title>
   <style>
     body {
-      background-color: #0f0f0f;
-      color: #00ff99;
-      font-family: 'Courier New', Courier, monospace;
       margin: 0;
-      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background-color: #fff;
+      line-height: 1.6;
     }
+
     header {
-      background-color: #111;
-      border-bottom: 3px double #00ff99;
       text-align: center;
-      padding: 20px 0;
+      padding: 40px 20px 10px;
     }
+
     header h1 {
-      font-size: 2.5rem;
       margin: 0;
+      font-size: 2rem;
+      font-weight: 500;
     }
+
     nav {
       margin-top: 10px;
     }
+
     nav a {
-      color: #00ff99;
+      margin: 0 12px;
       text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
+      color: #555;
+      font-weight: 500;
     }
-    .section {
-      padding: 40px 20px;
-      max-width: 800px;
-      margin: auto;
+
+    nav a:hover {
+      color: #000;
     }
-    .section h3 {
-      border-bottom: 2px dashed #00ff99;
-      padding-bottom: 10px;
+
+    main {
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 0 20px;
     }
-    .highlight {
-      background-color: #111;
-      border: 1px solid #00ff99;
-      padding: 20px;
-      margin-top: 20px;
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
     }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    blockquote {
+      margin: 30px 0;
+      padding-left: 20px;
+      border-left: 4px solid #ccc;
+      font-style: italic;
+      color: #555;
+    }
+
+    .links a {
+      display: block;
+      margin-bottom: 6px;
+      color: #0070f3;
+      text-decoration: none;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
     footer {
       text-align: center;
-      padding: 20px;
-      border-top: 2px dashed #00ff99;
-      margin-top: 40px;
       font-size: 0.8rem;
+      color: #999;
+      margin-top: 80px;
+      padding-bottom: 40px;
     }
   </style>
 </head>
 <body>
+
   <header>
     <h1>Thomas Braziel</h1>
     <nav>
@@ -64,10 +93,9 @@
     </nav>
   </header>
 
-<section class="section">
-  <h3>BitClave Advisory Engagement</h3>
+  <main>
+    <h2>BitClave Advisory Engagement</h2>
 
-  <div class="highlight">
     <p>
       In early 2025, I was brought in by a group of BitClave ($CAT) ICO claimants facing near-total losses. Their tokens were illiquid, the claims process was opaque, and most had written off their positions as worthless.
     </p>
@@ -88,28 +116,26 @@
     </p>
 
     <blockquote>
-      <em>
-        “We assumed we were getting zero. This was dead money. But thanks to Tom and his team, we now have real recovery on the table.”
-      </em><br>
+      “We assumed we were getting zero. This was dead money. But thanks to Tom and his team, we now have real recovery on the table.”<br>
       — BitClave claimant (anonymous)
     </blockquote>
 
-    <p>
+    <div class="links">
       <strong>Related Links:</strong><br>
-      ➤ <a href="https://www.sec.gov/enforcement-litigation/distributions-harmed-investors/matter-bitclave-pte-ltd-admin-proc-file-no-3-19816" target="_blank">SEC Enforcement Page – BitClave Fair Fund</a><br>
-      ➤ <a href="http://www.bitclavefairfund.com/" target="_blank">BitClaveFairFund.com – Claims Portal</a><br>
-      ➤ <a href="https://coinmarketcap.com/currencies/bitclave/" target="_blank">BitClave on CoinMarketCap</a><br>
-      ➤ <a href="https://www.coindesk.com/policy/2024/11/20/sec-distributes-46m-to-bitclave-investors" target="_blank">CoinDesk: SEC Distributes $46M to BitClave Investors</a>
-    </p>
+      <a href="https://www.sec.gov/enforcement-litigation/distributions-harmed-investors/matter-bitclave-pte-ltd-admin-proc-file-no-3-19816" target="_blank">SEC Enforcement Page – BitClave Fair Fund</a>
+      <a href="http://www.bitclavefairfund.com/" target="_blank">BitClaveFairFund.com – Claims Portal</a>
+      <a href="https://coinmarketcap.com/currencies/bitclave/" target="_blank">BitClave on CoinMarketCap</a>
+      <a href="https://www.coindesk.com/policy/2024/11/20/sec-distributes-46m-to-bitclave-investors" target="_blank">CoinDesk: SEC Distributes $46M to BitClave Investors</a>
+    </div>
 
     <p>
       We don’t just invest — we go to work when most walk away.
     </p>
-  </div>
-</section>
+  </main>
 
   <footer>
-    &copy; 2025 Thomas Braziel. Built in a retro terminal vibe. All rights reserved.
+    &copy; 2025 Thomas Braziel. All rights reserved.
   </footer>
+
 </body>
 </html>
